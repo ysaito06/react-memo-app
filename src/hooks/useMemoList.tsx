@@ -6,7 +6,7 @@ export interface memo {
   date: string;
 }
 
-export const useMemo = () => {
+export const useMemoList = () => {
   const [screenType, setScreenType] = useState<number>(0);
   const [showDeleteMemoModalFlg, setShowDeleteMemoModalFlg] =
     useState<boolean>(false);

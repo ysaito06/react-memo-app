@@ -1,10 +1,11 @@
+// main.tsx
 import React from 'react';
-import ReactDOM from 'react-dom';
+import ReactDOM from 'react-dom/client';
+// clientからimportする
 import App from './App';
 
-// Appコンポーネントをインポート
-
-ReactDOM.createRoot(document.getElementById('app')).render(
+const root = ReactDOM.createRoot(document.getElementById('app') as Element);
+root.render(
   <React.StrictMode>
     <App />
   </React.StrictMode>

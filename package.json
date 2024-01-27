@@ -4,9 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "ts-node src/main.ts",
-    "start": "node build/main.js",
-    "build": "tsc -p .",
+    "dev": "vite",
+    "build": "vite build",
+    "serve": "vite preview",
     "prepare": "husky install",
     "lint": "eslint . --ext js,jsx,ts,tsx --report-unused-disable-directives --max-warnings 0",
     "fmt": "prettier --write **/*.{js,jsx,ts,tsx,css,scss}",
@@ -20,6 +20,7 @@
   "license": "ISC",
   "devDependencies": {
     "@trivago/prettier-plugin-sort-imports": "^4.3.0",
+    "@types/react": "^18.2.48",
     "@typescript-eslint/eslint-plugin": "^6.19.1",
     "@typescript-eslint/parser": "^6.19.1",
     "eslint": "^8.56.0",
@@ -27,7 +28,13 @@
     "husky": "^8.0.0",
     "lint-staged": "^15.2.0",
     "prettier": "^3.2.4",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
     "ts-node": "^10.9.2",
     "typescript": "^5.3.3"
+  },
+  "dependencies": {
+    "@vitejs/plugin-react": "^4.2.1",
+    "vite": "^5.0.12"
   }
 }

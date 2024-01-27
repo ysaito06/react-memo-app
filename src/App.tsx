@@ -1,11 +1,15 @@
 import React from 'react';
+import Detail from './components/Detail';
+import List from './components/List';
 
-// Appコンポーネントを定義
+const screenType = 0;
+
 const App: React.FC = () => {
   return (
-    <div>
-      <h1>Hello, React!!</h1>
-    </div>
+    <>
+      <h1>メモアプリ</h1>
+      {screenType === 0 ? <List /> : <Detail />}
+    </>
   );
 };
 

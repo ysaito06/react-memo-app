@@ -1,16 +1,15 @@
 import React, { useEffect } from 'react';
+import Modal from 'react-modal';
 import { MemoList } from '../components/MemoList';
-import { useMemo } from '../hooks/useMemo';
+import { RegisterMemoModal } from '../components/modal/RegisterMemoModal';
+import { useMemoList } from '../hooks/useMemoList';
+import { useRegisterModal } from '../hooks/useRegisterModal';
 
 export const List: React.FC = () => {
   const {
     //memoList,
     setMemoList,
-    //showRegisterMemoModalFlg,
-    setShowRegisterMemoModalFlg,
-    //showDeleteMemoModalFlg,
-    //setShowDeleteMemoModalFlg,
-  } = useMemo();
+  } = useMemoList();
 
   const loadMemoList = () => {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -20,23 +19,34 @@ export const List: React.FC = () => {
     setMemoList(storageMemoList);
   };
 
+  const {
+    isOpen: isOpenRegisterModal,
+    open: openRegisterModal,
+    close: closeRegisterModal,
+  } = useRegisterModal();
+
   useEffect(() => {
     loadMemoList();
   }, []);
   return (
-    <div>
-      <div style={{ marginTop: '12px' }}>
-        <button
-          type="button"
-          style={{ width: '120px' }}
-          onClick={() => setShowRegisterMemoModalFlg(true)}
-        >
-          メモを登録
-        </button>
-        <div style={{ marginTop: '20px' }}>
-          <MemoList />
+    <>
+      <div>
+        <div style={{ marginTop: '12px' }}>
+          <button
+            type="button"
+            style={{ width: '120px' }}
+            onClick={openRegisterModal}
+          >
+            メモを登録
+          </button>
+          <div style={{ marginTop: '20px' }}>
+            <MemoList />
+          </div>
         </div>
       </div>
-    </div>
+      <Modal isOpen={isOpenRegisterModal}>
+        <RegisterMemoModal onClose={closeRegisterModal} />
+      </Modal>
+    </>
   );
 };

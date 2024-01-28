@@ -12,7 +12,7 @@ export const useMemoList = () => {
     useState<boolean>(false);
   const [showRegisterMemoModalFlg, setShowRegisterMemoModalFlg] =
     useState<boolean>(false);
-  const [selectIndex, setSelectIndex] = useState<number | null>(null);
+  const [selectIndex, setSelectIndex] = useState<number>(0);
   const [memoList, setMemoList] = useState<memo[]>([]);
 
   return {

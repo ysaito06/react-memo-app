@@ -1,12 +1,12 @@
-import React, { useState } from 'react';
-import { useMemoList } from '../../hooks/useMemoList';
+import React, { Dispatch, SetStateAction, useState } from 'react';
+import { memo } from '../../hooks/useMemoList';
 
 interface Props {
   onClose: () => void;
+  setMemoList: Dispatch<SetStateAction<memo[]>>;
 }
 
-export const RegisterMemoModal = ({ onClose }: Props) => {
-  const { setMemoList } = useMemoList();
+export const RegisterMemoModal = ({ onClose, setMemoList }: Props) => {
   const [memoTitle, setMemoTitle] = useState<string>('');
   const [memoContext, setMemoContext] = useState<string>('');
 
@@ -14,11 +14,10 @@ export const RegisterMemoModal = ({ onClose }: Props) => {
    * メモを登録
    */
   const registerMemo = () => {
-    const localStorageMemoList: string = localStorage.getItem('memoList') ?? '';
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const newMemoList: any[] = localStorageMemoList
-      ? JSON.parse(localStorageMemoList)
-      : [];
+    const localStorageMemoList: string | null =
+      localStorage.getItem('memoList');
+    const newMemoList: { title: string; context: string; date: string }[] =
+      localStorageMemoList ? JSON.parse(localStorageMemoList) : [];
     const now: Date = new Date();
 
     newMemoList.push({
@@ -32,6 +31,7 @@ export const RegisterMemoModal = ({ onClose }: Props) => {
     localStorage.setItem('memoList', JSON.stringify(newMemoList));
 
     setMemoList(newMemoList);
+    onClose();
   };
 
   const handleInputChangeTitle = (

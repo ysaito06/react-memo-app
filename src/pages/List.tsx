@@ -1,20 +1,19 @@
 import React, { useEffect } from 'react';
 import Modal from 'react-modal';
 import { MemoList } from '../components/MemoList';
+import { DeleteMemoModal } from '../components/modal/DeleteMemoModal';
 import { RegisterMemoModal } from '../components/modal/RegisterMemoModal';
-import { useMemoList } from '../hooks/useMemoList';
+import { useDeleteModal } from '../hooks/useDeleteModal';
+import { memo, useMemoList } from '../hooks/useMemoList';
 import { useRegisterModal } from '../hooks/useRegisterModal';
 
 export const List: React.FC = () => {
-  const {
-    //memoList,
-    setMemoList,
-  } = useMemoList();
+  const { memoList, setMemoList } = useMemoList();
 
   const loadMemoList = () => {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const storageMemoList: any[] = [];
-    //JSON.parse(localStorage.getItem('memoList')) || [];
+    const storageMemoList: memo[] = localStorage.getItem('memoList')
+      ? JSON.parse(localStorage.getItem('memoList') || '{}')
+      : [];
 
     setMemoList(storageMemoList);
   };
@@ -24,6 +23,12 @@ export const List: React.FC = () => {
     open: openRegisterModal,
     close: closeRegisterModal,
   } = useRegisterModal();
+
+  const {
+    isOpen: isOpenDeleteModal,
+    open: openDeleteModal,
+    close: closeDeleteModal,
+  } = useDeleteModal();
 
   useEffect(() => {
     loadMemoList();
@@ -40,12 +45,18 @@ export const List: React.FC = () => {
             メモを登録
           </button>
           <div style={{ marginTop: '20px' }}>
-            <MemoList />
+            <MemoList onOpen={openDeleteModal} memoList={memoList} />
           </div>
         </div>
       </div>
-      <Modal isOpen={isOpenRegisterModal}>
-        <RegisterMemoModal onClose={closeRegisterModal} />
+      <Modal isOpen={isOpenRegisterModal} ariaHideApp={false}>
+        <RegisterMemoModal
+          onClose={closeRegisterModal}
+          setMemoList={setMemoList}
+        />
+      </Modal>
+      <Modal isOpen={isOpenDeleteModal} ariaHideApp={false}>
+        <DeleteMemoModal onClose={closeDeleteModal} />
       </Modal>
     </>
   );

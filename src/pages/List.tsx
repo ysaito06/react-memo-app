@@ -8,7 +8,8 @@ import { memo, useMemoList } from '../hooks/useMemoList';
 import { useRegisterModal } from '../hooks/useRegisterModal';
 
 export const List: React.FC = () => {
-  const { memoList, setMemoList } = useMemoList();
+  const { memoList, setMemoList, selectIndex, setSelectIndex, setScreenType } =
+    useMemoList();
 
   const loadMemoList = () => {
     const storageMemoList: memo[] = localStorage.getItem('memoList')
@@ -45,7 +46,12 @@ export const List: React.FC = () => {
             メモを登録
           </button>
           <div style={{ marginTop: '20px' }}>
-            <MemoList onOpen={openDeleteModal} memoList={memoList} />
+            <MemoList
+              onOpen={openDeleteModal}
+              memoList={memoList}
+              setScreenType={setScreenType}
+              setSelectIndex={setSelectIndex}
+            />
           </div>
         </div>
       </div>
@@ -56,7 +62,12 @@ export const List: React.FC = () => {
         />
       </Modal>
       <Modal isOpen={isOpenDeleteModal} ariaHideApp={false}>
-        <DeleteMemoModal onClose={closeDeleteModal} />
+        <DeleteMemoModal
+          onClose={closeDeleteModal}
+          memoList={memoList}
+          selectIndex={selectIndex}
+          setMemoList={setMemoList}
+        />
       </Modal>
     </>
   );

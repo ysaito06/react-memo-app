@@ -1,13 +1,19 @@
-import React from 'react';
-import { memo, useMemoList } from '../hooks/useMemoList';
+import React, { Dispatch, SetStateAction } from 'react';
+import { memo } from '../hooks/useMemoList';
 
 interface Props {
   onOpen: () => void;
   memoList: memo[];
+  setSelectIndex: Dispatch<SetStateAction<number>>;
+  setScreenType: Dispatch<SetStateAction<number>>;
 }
 
-export const MemoList = ({ onOpen, memoList }: Props) => {
-  const { setScreenType, setSelectIndex } = useMemoList();
+export const MemoList = ({
+  onOpen,
+  memoList,
+  setSelectIndex,
+  setScreenType,
+}: Props) => {
   const showMemoDetailPage = (index: number) => {
     setSelectIndex(index);
     setScreenType(1);
